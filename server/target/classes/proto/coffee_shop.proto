@@ -1,0 +1,37 @@
+syntax = "proto3";
+
+option java_package = "org.example.coffeeshop";
+option java_outer_classname = "CoffeeShopProto";
+
+service CoffeeShopService {
+  // Unary RPC
+  rpc OrderCoffee (CoffeeRequest) returns (CoffeeResponse);
+
+  // Server Streaming RPC
+  rpc TrackOrder (CoffeeRequest) returns (stream CoffeeStatus);
+
+  // Client Streaming RPC
+  rpc BulkOrder (stream CoffeeRequest) returns (OrderSummary);
+
+  // Bidirectional Streaming RPC
+  rpc CoffeeChat (stream CoffeeRequest) returns (stream CoffeeResponse);
+}
+
+message CoffeeRequest {
+  string name = 1;
+  string coffee_type = 2;
+}
+
+message CoffeeResponse {
+  string message = 1;
+  double price = 2;
+}
+
+message CoffeeStatus {
+  string status = 1;
+}
+
+message OrderSummary {
+  int32 total_orders = 1;
+  double total_price = 2;
+}
